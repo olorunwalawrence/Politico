@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(logger('dev'));
 app.use(cors());
-app.get('/', (req, res) => res.status(200).json({
+app.get('/api/v1', (req, res) => res.status(200).json({
   message: 'this is the application home page'
 }));
 
