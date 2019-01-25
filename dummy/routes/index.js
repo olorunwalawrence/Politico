@@ -13,13 +13,13 @@ const {
 } = politicalparty;
 
 
-router.post('/api/v1/createoffice', officeValidator, createOffice);
-router.post('/api/v1/createparty', PartyValidation, createParty);
-router.get('/api/v1/getalloffice', getAllOffice);
-router.get('/api/v1/getallparty', getAllParty);
-router.get('/api/v1/getsingleoffice/:id', getSingleOffice);
-router.get('/api/v1/getsingleparty/:id', getSingleParty);
-router.put('/api/v1/updateparty/:id', updateparty);
-router.delete('/api/v1/deleteparty/:id', DeleteParty);
+router.post('/createoffice', officeValidator, createOffice);
+router.post('/createparty', PartyValidation, createParty);
+router.get('/getalloffice', getAllOffice);
+router.get('/getallparty', getAllParty);
+router.get('/getsingleoffice/:id', getSingleOffice);
+router.get('/getsingleparty/:id', getSingleParty);
+router.put('/updateparty/:id', updateparty);
+router.delete('/deleteparty/:id', DeleteParty);
 
 export default router;
