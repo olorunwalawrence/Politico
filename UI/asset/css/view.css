@@ -12,12 +12,6 @@ body{
     width:85%;
 }
 
-.banner{
-    width:100%;
-    background-color: rgb(145, 43, 43);
-    opacity: 0.8; 
-    height:250px;
-}
 .topnav {
     overflow: hidden;
     background-color: #333;
@@ -84,6 +78,9 @@ section{
     height: 100vh;
     background: rgb(235, 231, 231);
 }
+.viewparty {
+    text-align:left;
+}
 
 .signup-form{
     width:40%;
@@ -93,7 +90,7 @@ section{
     left:25%;
 }
 .wrapper > h1{
-    text-align: center;
+    /* text-align: center; */
     margin:0;
     padding-top:20px;
     text-transform: uppercase;
@@ -163,19 +160,26 @@ p > a{
 }
 .voteResult{
     text-align: center;
+    width:400px;
     padding-top:50px;
     display:grid;
-    grid-template-columns: repeat(2,1fr)
+    grid-template-columns: repeat(2,1fr);
+ 
 }
-h1{
+.vote{
+    display: flex;
+}
+
+.title{
     text-align: center;
     color: rgb(155, 23, 23);
 }
 .result{
 padding:10px;
+text-align: left;
 text-transform: capitalize;
 color: gray;
-
+border:1px solid grey;
 }
 .vresult{
     margin-left:100px;

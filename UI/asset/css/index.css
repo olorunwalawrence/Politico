@@ -10,6 +10,17 @@ body {
   margin: 0 auto;
   width: 85%;
 }
+section{
+  background-image: url("../images/image1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.imagewrapper{
+  background-image: url("../images/image1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: none;
+}
 
 .banner {
   width: 100%;
@@ -20,6 +31,9 @@ body {
 .topnav {
   overflow: hidden;
   background-color: #333;
+}
+.image{
+  display: none;
 }
 
 .topnav a {
@@ -72,6 +86,7 @@ h2 {
 .banner-writeup {
   width: 100%;
   text-align: justify;
+
 }
 section {
   background-color: white;
@@ -130,6 +145,7 @@ footer {
     position: relative;
     left: 27%;
   }
+
 }
 @media (max-width: 900px) {
   .topnav a {
@@ -210,12 +226,18 @@ footer {
     left: 0%;
     height: auto;
   }
-  section {
-    background-color: white;
-    margin: 0 auto;
-    width: 85%;
-    height: auto;
+  .image {
+ display: block;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width:106.5%;
+    height:50vh;
   }
+  section{
+    height:80vh;
+
+  }
+.imagewrapper{display: none}
 
   .leader-section {
     width: 100%;
