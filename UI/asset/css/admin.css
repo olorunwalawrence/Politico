@@ -15,12 +15,7 @@ body{
     width:85%;
 }
 
-.banner{
-    width:100%;
-    background-color: rgb(145, 43, 43);
-    opacity: 0.8; 
-    height:250px;
-}
+
 .topnav {
     overflow: hidden;
     background-color: #333;

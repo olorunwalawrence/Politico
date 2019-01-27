@@ -27,7 +27,7 @@
     <header>
       <div class="wrapper">
         <div class="logo">
-          <h1 class="logo"><span>POLI</span>TICO</h1>
+            <h1 class="logo"><a href="index.html"><span>POLI</span>TICO</a></h1>
         </div>
         <div class="topnav" id="myTopnav">
           <a href="index.html">Logout</a> <a href="index.html">Home</a>
@@ -39,14 +39,7 @@
         </div>
 
         <div class="banner">
-          <div class="banner-writeup">
-            <h3>Give your important vote make the country</h3>
-            <p class="banner-text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
-              modi porro ea asperiores quod soluta perspiciatis laborum expedita
-              cum, beatae odit? Tempora non vel odit at, quas hic, autem ullam
-            </p>
-          </div>
+        
         </div>
       </div>
     </header>
@@ -61,6 +54,7 @@
               id="fullname"
               name="fullname"
               placeholder="fullname"
+              required
             />
 
             <input
@@ -68,15 +62,17 @@
               id="uname"
               name="username"
               placeholder="username"
+              required
             />
 
-            <input type="text" id="email" name="email" placeholder="email" />
+            <input type="text" id="email" name="email" placeholder="email"  required/>
 
             <input
               type="password"
               id="pword"
               name="password"
               placeholder="password"
+              required
             />
 
             <input
@@ -84,6 +80,7 @@
               id="cpword"
               name="confirm-password"
               placeholder="confirm password"
+              required
             />
 
             <button type="submit" class="btn">SignUp</button>
