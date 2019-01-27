@@ -3,7 +3,9 @@ import politicaloffice from '../controllers/politicaloffice';
 import politicalparty from '../controllers/politicalParty';
 import Validation from '../validation/formFileldValidation';
 
-const { officeValidator, PartyValidation } = Validation;
+const {
+  officeValidator, PartyValidation, validateOfficeMessage, validatePartyMessage
+} = Validation;
 
 const router = express.Router();
 
@@ -13,8 +15,8 @@ const {
 } = politicalparty;
 
 
-router.post('/createoffice', officeValidator, createOffice);
-router.post('/createparty', PartyValidation, createParty);
+router.post('/createoffice', officeValidator, validateOfficeMessage, createOffice);
+router.post('/createparty', PartyValidation, validatePartyMessage, createParty);
 router.get('/getalloffice', getAllOffice);
 router.get('/getallparty', getAllParty);
 router.get('/getsingleoffice/:id', getSingleOffice);

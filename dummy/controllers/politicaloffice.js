@@ -1,7 +1,7 @@
 /* eslint-disable require-jsdoc */
 
 import politicalOfficeDb from '../dummyDatabase/politicalOfficeDb';
-
+import handleSingleQuery from '../utils/getSingleQuery';
 
 export default class politicalOffice {
   /*
@@ -10,22 +10,33 @@ export default class politicalOffice {
     ==========================================
     */
   static createOffice(req, res) {
-    if (!req.body.officename) {
+    const {
+      officename,
+      hqaddress
+    } = req.body;
+
+    if (!officename) {
       return res.status(400).send({
         success: 'false',
         message: 'office name is required'
       });
-    } if (!req.body.officetype) {
+    }
+    if (!hqaddress) {
       return res.status(400).send({
         success: 'false',
         message: 'hqaddress is required'
       });
     }
-    const { officename, officetype } = req.body;
+    const result = politicalOfficeDb
+      .filter(officeName => officeName.officename === officename.toLowerCase());
+
+    if (!result.length < 1) {
+      return res.status(400).json({ message: 'Office has been created' });
+    }
     const data = {
       id: politicalOfficeDb.length + 1,
-      officename,
-      officetype
+      officename: officename.toLowerCase(),
+      hqaddress
     };
 
     politicalOfficeDb.push(data);
@@ -36,10 +47,9 @@ export default class politicalOffice {
     });
   }
 
-
   /*
     =========================================
-    Get political office
+    Get  all political office
     ==========================================
     */
 
@@ -61,18 +71,6 @@ export default class politicalOffice {
   static getSingleOffice(req, res) {
     const id = parseInt(req.params.id, 10);
 
-    politicalOfficeDb.map((office) => {
-      if (office.id === id) {
-        return res.status(201).json({
-          success: true,
-          message: 'office retrieved successfully',
-          office
-        });
-      }
-    });
-    return res.status(404).json({
-      success: false,
-      message: 'office does not exist',
-    });
+    handleSingleQuery(politicalOfficeDb, id, 'office retrieved successfully', 'office does not exist', res);
   }
 }

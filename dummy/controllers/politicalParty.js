@@ -1,7 +1,7 @@
 /* eslint-disable require-jsdoc */
 
 import politicalPartyDb from '../dummyDatabase/politicalPartyDb';
-
+import handleSingleQuery from '../utils/getSingleQuery';
 
 export default class politicalParty {
   /*
@@ -11,7 +11,12 @@ export default class politicalParty {
     */
   static createParty(req, res) {
     const {
-      partyname, address, phone, email, regnumber, imgurl
+      partyname,
+      address,
+      phone,
+      email,
+      regnumber,
+      imgurl
     } = req.body;
 
     if (!partyname || !address || !phone || !email || !regnumber || !imgurl) {
@@ -19,6 +24,12 @@ export default class politicalParty {
         success: 'false',
         message: 'undefined field detected'
       });
+    }
+    const result = politicalPartyDb
+      .filter(partyName => partyName.partyname === partyname.toLowerCase());
+
+    if (!result.length < 1) {
+      return res.status(400).json({ message: 'Office party has been created' });
     }
     const data = {
       id: politicalPartyDb.length + 1,
@@ -62,44 +73,8 @@ export default class politicalParty {
 
   static getSingleParty(req, res) {
     const id = parseInt(req.params.id, 10);
-
-    politicalPartyDb.map((party) => {
-      if (party.id === id) {
-        return res.status(200).json({
-          success: true,
-          message: 'party retrieved successfully',
-          party
-        });
-      }
-    });
-    return res.status(404).json({
-      success: false,
-      message: 'party does not exist',
-    });
+    handleSingleQuery(politicalPartyDb, id, 'party retrieved successfully', 'party does not exist', res);
   }
-
-  /*
-    =========================================
-                Delete political party
-    ==========================================
-    */
-  static deleteSingleParty(req, res) {
-    const id = parseInt(req.params.id, 10);
-    politicalPartyDb.map((party, index) => {
-      if (party.id === id) {
-        politicalPartyDb.splice(index, 1);
-        return res.status(200).json({
-          success: true,
-          message: 'party deleted successfully'
-        });
-      }
-    });
-    return res.status(404).json({
-      success: false,
-      message: 'no such party found'
-    });
-  }
-
   /*
     =========================================
                 Update political party
@@ -142,6 +117,11 @@ export default class politicalParty {
     });
   }
 
+  /*
+    =========================================
+                Delete political party
+    =========================================
+  */
   static DeleteParty(req, res) {
     const id = parseInt(req.params.id, 10);
     let partyFound;
