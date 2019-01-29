@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import cors from 'cors';
-// import route from './server/route/index';
+import route from './server/route/index';
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.get('/api/v1', (req, res) => res.status(200).json({
   message: 'this is the application home page'
 }));
 
-// app.use('/api/v1', route);
+app.use('/api/v1', route);
 app.listen(port, (err) => {
   console.log('server is up and running');
 });
