@@ -1,7 +1,6 @@
 /* eslint-disable require-jsdoc */
-
+import getSingleQuery from '../utils/utils';
 import politicalPartyDb from '../dummyDatabase/politicalPartyDb';
-
 
 export default class politicalParty {
   /*
@@ -11,8 +10,7 @@ export default class politicalParty {
     */
   static createParty(req, res) {
     const {
-      partyname, address, phone, email, regnumber, imgurl
-    } = req.body;
+ partyname, address, phone, email, regnumber, imgurl } = req.body;
 
     if (!partyname || !address || !phone || !email || !regnumber || !imgurl) {
       return res.status(400).send({
@@ -38,7 +36,6 @@ export default class politicalParty {
     });
   }
 
-
   /*
     =========================================
     Get all political party
@@ -53,7 +50,6 @@ export default class politicalParty {
     });
   }
 
-
   /*
     =========================================
         Get a single political party
@@ -63,19 +59,13 @@ export default class politicalParty {
   static getSingleParty(req, res) {
     const id = parseInt(req.params.id, 10);
 
-    politicalPartyDb.map((party) => {
-      if (party.id === id) {
-        return res.status(200).json({
-          success: true,
-          message: 'party retrieved successfully',
-          party
-        });
-      }
-    });
-    return res.status(404).json({
-      success: false,
-      message: 'party does not exist',
-    });
+    getSingleQuery(
+      politicalPartyDb,
+      id,
+      'party retrieved successfully',
+      'party does not exist',
+      res
+    );
   }
 
   /*
@@ -120,7 +110,7 @@ export default class politicalParty {
       return res.status(400).send({
         status: 'updated',
         success: 'false',
-        message: 'political party not found',
+        message: 'political party not found'
       });
     }
     const updatedParty = {
@@ -156,14 +146,14 @@ export default class politicalParty {
       return res.status(400).send({
         status: 'not found',
         success: 'false',
-        message: 'political party not found',
+        message: 'political party not found'
       });
     }
 
     politicalPartyDb.splice(partyIndex, 1);
     return res.status(200).send({
       success: 'true',
-      message: 'political party deleted successfuly',
+      message: 'political party deleted successfuly'
     });
   }
 }

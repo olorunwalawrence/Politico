@@ -1,5 +1,5 @@
 /* eslint-disable require-jsdoc */
-
+import getSingleQuery from '../utils/utils';
 import politicalOfficeDb from '../dummyDatabase/politicalOfficeDb';
 
 
@@ -61,18 +61,6 @@ export default class politicalOffice {
   static getSingleOffice(req, res) {
     const id = parseInt(req.params.id, 10);
 
-    politicalOfficeDb.map((office) => {
-      if (office.id === id) {
-        return res.status(201).json({
-          success: true,
-          message: 'office retrieved successfully',
-          office
-        });
-      }
-    });
-    return res.status(404).json({
-      success: false,
-      message: 'office does not exist',
-    });
+    getSingleQuery(politicalOfficeDb, id, 'political office retrieved successfully', political office does not exist', res )
   }
 }
