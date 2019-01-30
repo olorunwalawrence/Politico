@@ -61,6 +61,6 @@ export default class politicalOffice {
   static getSingleOffice(req, res) {
     const id = parseInt(req.params.id, 10);
 
-    getSingleQuery(politicalOfficeDb, id, 'political office retrieved successfully', 'party does not exist', res )
+    getSingleQuery(politicalOfficeDb, id, 'political office retrieved successfully', political office does not exist', res )
   }
 }
