@@ -1,5 +1,5 @@
 /* eslint-disable require-jsdoc */
-import getSingleQuery from '../utils/utils';
+
 import politicalOfficeDb from '../dummyDatabase/politicalOfficeDb';
 
 
@@ -9,24 +9,39 @@ export default class politicalOffice {
     Create political office
     ==========================================
     */
-  static createOffice(req, res) {
-    if (!req.body.officename) {
+   static createOffice(req, res) {
+    const { officename, officeaddress } = req.body;
+    if (!officename) {
       return res.status(400).send({
         success: 'false',
         message: 'office name is required'
       });
-    } if (!req.body.officetype) {
+    }
+    if (!officeaddress) {
       return res.status(400).send({
         success: 'false',
-        message: 'hqaddress is required'
+        message: 'officeaddress is required'
       });
     }
-    const { officename, officetype } = req.body;
+      /*
+    =========================================
+      CHECK IF THE PARTY NAME ALREADY EXIST
+    ==========================================
+    */ 
+    const result = politicalOfficeDb.filter(officeName => officeName.officename === officename.toLowerCase());
+    if (!result.length < 1) {
+      return res.status(400).json({ message: 'party already exit' });
+    }
     const data = {
       id: politicalOfficeDb.length + 1,
-      officename,
-      officetype
+      officename: officename.toLowerCase(),
+      officeaddress
     };
+      /*
+    =========================================
+        PUSH DATA INTO DUMMY DATABASE
+    ==========================================
+    */
 
     politicalOfficeDb.push(data);
     return res.status(200).json({
@@ -58,9 +73,23 @@ export default class politicalOffice {
     ==========================================
     */
 
-  static getSingleOffice(req, res) {
-    const id = parseInt(req.params.id, 10);
 
-    getSingleQuery(politicalOfficeDb, id, 'political office retrieved successfully', political office does not exist', res )
-  }
+    static getSingleOffice(req, res) {
+      const id = parseInt(req.params.id, 10);
+  
+      politicalOfficeDb.map((office) => {
+        if (office.id === id) {
+          return res.status(201).json({
+            success: true,
+            message: 'office retrieved successfully',
+            office
+          });
+        }
+      });
+      return res.status(404).json({
+        success: false,
+        message: 'office does not exist',
+      });
+    }
+  
 }
