@@ -9,24 +9,39 @@ export default class politicalOffice {
     Create political office
     ==========================================
     */
-  static createOffice(req, res) {
-    if (!req.body.officename) {
+   static createOffice(req, res) {
+    const { officename, officeAddress } = req.body;
+    if (!officename) {
       return res.status(400).send({
         success: 'false',
         message: 'office name is required'
       });
-    } if (!req.body.officetype) {
+    }
+    if (!officeAddress) {
       return res.status(400).send({
         success: 'false',
         message: 'hqaddress is required'
       });
     }
-    const { officename, officetype } = req.body;
+      /*
+    =========================================
+      CHECK IF THE PARTY NAME ALREADY EXIST
+    ==========================================
+    */ 
+    const result = politicalOfficeDb.filter(officeName => officeName.officename === officename.toLowerCase());
+    if (!result.length < 1) {
+      return res.status(400).json({ message: 'party already exit' });
+    }
     const data = {
       id: politicalOfficeDb.length + 1,
-      officename,
-      officetype
+      officename: officename.toLowerCase(),
+      officeAddress
     };
+      /*
+    =========================================
+        PUSH DATA INTO DUMMY DATABASE
+    ==========================================
+    */
 
     politicalOfficeDb.push(data);
     return res.status(200).json({
@@ -61,6 +76,6 @@ export default class politicalOffice {
   static getSingleOffice(req, res) {
     const id = parseInt(req.params.id, 10);
 
-    getSingleQuery(politicalOfficeDb, id, 'political office retrieved successfully', political office does not exist', res )
+    getSingleQuery(politicalOfficeDb, id, 'political office retrieved successfully', 'party does not exist', res )
   }
 }

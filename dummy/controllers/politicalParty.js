@@ -18,16 +18,29 @@ export default class politicalParty {
         message: 'undefined field detected'
       });
     }
+     /*
+    =========================================
+      CHECK IF THE PARTY NAME ALREADY EXIST
+    ==========================================
+    */ 
+    const result = politicalPartyDb.filter(partyName => partyName.partyname === partyname.toLowerCase());
+    if (!result.length < 1) {
+      return res.status(400).json({ message: 'party already exit' });
+    }
     const data = {
       id: politicalPartyDb.length + 1,
-      partyname,
+      partyname: partyname.toLowerCase(),
       address,
       phone,
       email,
       regnumber,
       imgurl
     };
-
+  /*
+    =========================================
+        PUSH DATA INTO DUMMY DATABASE
+    ==========================================
+    */
     politicalPartyDb.push(data);
     return res.status(200).json({
       success: true,
