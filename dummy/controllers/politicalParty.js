@@ -1,8 +1,11 @@
 /* eslint-disable require-jsdoc */
-import getSingleQuery from '../utils/utils';
+
 import politicalPartyDb from '../dummyDatabase/politicalPartyDb';
 
 export default class politicalParty {
+  
+
+
   /*
     =========================================
                 Create political party
@@ -18,16 +21,29 @@ export default class politicalParty {
         message: 'undefined field detected'
       });
     }
+     /*
+    =========================================
+      CHECK IF THE PARTY NAME ALREADY EXIST
+    ==========================================
+    */ 
+    const result = politicalPartyDb.filter(partyName => partyName.partyname === partyname.toLowerCase());
+    if (!result.length < 1) {
+      return res.status(400).json({ message: 'party already exit' });
+    }
     const data = {
       id: politicalPartyDb.length + 1,
-      partyname,
+      partyname: partyname.toLowerCase(),
       address,
       phone,
       email,
       regnumber,
       imgurl
     };
-
+  /*
+    =========================================
+        PUSH DATA INTO DUMMY DATABASE
+    ==========================================
+    */
     politicalPartyDb.push(data);
     return res.status(200).json({
       success: true,
@@ -55,17 +71,22 @@ export default class politicalParty {
         Get a single political party
     ==========================================
     */
-
-  static getSingleParty(req, res) {
+   static getSingleParty(req, res) {
     const id = parseInt(req.params.id, 10);
 
-    getSingleQuery(
-      politicalPartyDb,
-      id,
-      'party retrieved successfully',
-      'party does not exist',
-      res
-    );
+    politicalPartyDb.map((party) => {
+      if (party.id === id) {
+        return res.status(201).json({
+          success: true,
+          message: 'party retrieved successfully',
+          party
+        });
+      }
+    });
+    return res.status(404).json({
+      success: false,
+      message: 'party does not exist',
+    });
   }
 
   /*
