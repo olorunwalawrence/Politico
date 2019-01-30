@@ -3,7 +3,7 @@ import politicaloffice from '../controllers/politicaloffice';
 import politicalparty from '../controllers/politicalParty';
 import Validation from '../validation/formFileldValidation';
 
-const { officeValidator, PartyValidation } = Validation;
+const { PartyValidation , officeValidation } = Validation;
 
 const router = express.Router();
 
@@ -12,14 +12,13 @@ const {
   createParty, getAllParty, getSingleParty, updateparty, DeleteParty
 } = politicalparty;
 
-
-router.post('/createoffice', officeValidator, createOffice);
-router.post('/createparty', PartyValidation, createParty);
-router.get('/getalloffice', getAllOffice);
-router.get('/getallparty', getAllParty);
-router.get('/getsingleoffice/:id', getSingleOffice);
-router.get('/getsingleparty/:id', getSingleParty);
-router.put('/updateparty/:id', updateparty);
-router.delete('/deleteparty/:id', DeleteParty);
+router.post('/offices', officeValidation, createOffice);
+router.post('/parties', PartyValidation, createParty);
+router.get('/offices', getAllOffice);
+router.get('/parties', getAllParty);
+router.get('/offices/:id', getSingleOffice);
+router.get('/parties/:id', getSingleParty);
+router.patch('/parties/:id', updateparty);
+router.delete('/parties/:id', DeleteParty);
 
 export default router;
