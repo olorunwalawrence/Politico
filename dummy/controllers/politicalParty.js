@@ -1,8 +1,11 @@
 /* eslint-disable require-jsdoc */
-import getSingleQuery from '../utils/utils';
+
 import politicalPartyDb from '../dummyDatabase/politicalPartyDb';
 
 export default class politicalParty {
+  
+
+
   /*
     =========================================
                 Create political party
@@ -68,17 +71,22 @@ export default class politicalParty {
         Get a single political party
     ==========================================
     */
-
-  static getSingleParty(req, res) {
+   static getSingleParty(req, res) {
     const id = parseInt(req.params.id, 10);
 
-    getSingleQuery(
-      politicalPartyDb,
-      id,
-      'party retrieved successfully',
-      'party does not exist',
-      res
-    );
+    politicalPartyDb.map((party) => {
+      if (party.id === id) {
+        return res.status(201).json({
+          success: true,
+          message: 'party retrieved successfully',
+          party
+        });
+      }
+    });
+    return res.status(404).json({
+      success: false,
+      message: 'party does not exist',
+    });
   }
 
   /*

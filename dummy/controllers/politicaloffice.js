@@ -1,5 +1,5 @@
 /* eslint-disable require-jsdoc */
-import getSingleQuery from '../utils/utils';
+
 import politicalOfficeDb from '../dummyDatabase/politicalOfficeDb';
 
 
@@ -10,17 +10,17 @@ export default class politicalOffice {
     ==========================================
     */
    static createOffice(req, res) {
-    const { officename, officeAddress } = req.body;
+    const { officename, officeaddress } = req.body;
     if (!officename) {
       return res.status(400).send({
         success: 'false',
         message: 'office name is required'
       });
     }
-    if (!officeAddress) {
+    if (!officeaddress) {
       return res.status(400).send({
         success: 'false',
-        message: 'hqaddress is required'
+        message: 'officeaddress is required'
       });
     }
       /*
@@ -35,7 +35,7 @@ export default class politicalOffice {
     const data = {
       id: politicalOfficeDb.length + 1,
       officename: officename.toLowerCase(),
-      officeAddress
+      officeaddress
     };
       /*
     =========================================
@@ -73,9 +73,23 @@ export default class politicalOffice {
     ==========================================
     */
 
-  static getSingleOffice(req, res) {
-    const id = parseInt(req.params.id, 10);
 
-    getSingleQuery(politicalOfficeDb, id, 'political office retrieved successfully', 'party does not exist', res )
-  }
+    static getSingleOffice(req, res) {
+      const id = parseInt(req.params.id, 10);
+  
+      politicalOfficeDb.map((office) => {
+        if (office.id === id) {
+          return res.status(201).json({
+            success: true,
+            message: 'office retrieved successfully',
+            office
+          });
+        }
+      });
+      return res.status(404).json({
+        success: false,
+        message: 'office does not exist',
+      });
+    }
+  
 }
