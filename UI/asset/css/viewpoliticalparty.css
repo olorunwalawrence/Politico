@@ -1,0 +1,13 @@
+.viewparty{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    margin:20px 20px;
+    background: gray;
+}
+.party{
+    padding:20px;
+    text-align: center;
+    text-transform: capitalize;
+    color:#ccc;
+    font-size: 14px;
+}
