@@ -9,7 +9,7 @@ export default class politicalOffice {
     Create political office
     ==========================================
     */
-   static createOffice(req, res) {
+  static createOffice(req, res) {
     const { officename, officeAddress } = req.body;
     if (!officename) {
       return res.status(400).send({
