@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import cors from 'cors';
 import route from './dummy/routes/index';
-
+// import router from './dummy/allroute/all';
 const app = express();
 
 const port = parseInt(process.env.PORT, 10) || 5000;
@@ -16,7 +16,8 @@ app.get('/api/v1', (req, res) => res.status(200).json({
   message: 'this is the application home page'
 }));
 
-app.use('/api/v1', route);
+
+
 app.listen(port, (err) => {
   console.log('server is up and running');
 });

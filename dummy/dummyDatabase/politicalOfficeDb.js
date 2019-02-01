@@ -1,7 +1,7 @@
-export default [
-  {
-    id: 1,
-    officename: 'APC',
-    officeaddress: 'Lagos'
-  }
+export default [{
+  id: 1,
+  name: 'APC',
+  hqAddress: 'Lagos',
+  logoUrl:'http://google.com' 
+}
 ];

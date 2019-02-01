@@ -1,53 +1,43 @@
 /* eslint-disable require-jsdoc */
 
 import politicalPartyDb from '../dummyDatabase/politicalPartyDb';
+import { parties, getParties, handleSinglePary } from '../util/util';
 
 export default class politicalParty {
-  
-
-
   /*
     =========================================
                 Create political party
     ==========================================
     */
   static createParty(req, res) {
-    const {
- partyname, address, phone, email, regnumber, imgurl } = req.body;
-
-    if (!partyname || !address || !phone || !email || !regnumber || !imgurl) {
-      return res.status(400).send({
-        success: 'false',
-        message: 'undefined field detected'
-      });
-    }
-     /*
+    const { name, hqAddress, logoUrl } = req.body;
+    /*
     =========================================
       CHECK IF THE PARTY NAME ALREADY EXIST
     ==========================================
-    */ 
-    const result = politicalPartyDb.filter(partyName => partyName.partyname === partyname.toLowerCase());
+    */
+    parties(name, hqAddress, logoUrl, res);
+
+    const result = politicalPartyDb.filter(
+      Name => Name.name === name.toLowerCase()
+    );
     if (!result.length < 1) {
       return res.status(400).json({ message: 'party already exit' });
     }
     const data = {
       id: politicalPartyDb.length + 1,
-      partyname: partyname.toLowerCase(),
-      address,
-      phone,
-      email,
-      regnumber,
-      imgurl
+      name: name.toLowerCase(),
+      hqAddress: hqAddress.toLowerCase(),
+      logoUrl
     };
-  /*
+    /*
     =========================================
         PUSH DATA INTO DUMMY DATABASE
     ==========================================
     */
     politicalPartyDb.push(data);
-    return res.status(200).json({
-      success: true,
-      message: 'politiccal party created successfully',
+    return res.status(201).json({
+      status: 201,
       data
     });
   }
@@ -59,11 +49,7 @@ export default class politicalParty {
     */
 
   static getAllParty(req, res) {
-    return res.status(200).json({
-      success: true,
-      message: 'All political party retrieved successfully',
-      politicalPartyDb
-    });
+    getParties(res, politicalPartyDb);
   }
 
   /*
@@ -71,25 +57,16 @@ export default class politicalParty {
         Get a single political party
     ==========================================
     */
-   static getSingleParty(req, res) {
+  static getSingleParty(req, res) {
     const id = parseInt(req.params.id, 10);
 
-    politicalPartyDb.map((party) => {
-      if (party.id === id) {
-        return res.status(201).json({
-          success: true,
-          message: 'party retrieved successfully',
-          party
-        });
-      }
-    });
-    return res.status(404).json({
-      success: false,
-      message: 'party does not exist',
-    });
+    handleSinglePary(
+      politicalPartyDb,
+      id,
+      'specified party does not exist',
+      res
+    );
   }
-
-
 
   /*
     =========================================
@@ -98,38 +75,26 @@ export default class politicalParty {
     */
 
   static updateparty(req, res) {
-    const id = parseInt(req.params.id, 10);
-    let partyFound;
-    let partyIndex;
-    politicalPartyDb.map((party, index) => {
-      if (party.id === id) {
-        partyFound = party;
-        partyIndex = index;
+    let updatedparty;
+    const { id } = req.params;
+    politicalPartyDb.forEach((party) => {
+
+      if (party.id === parseInt(id, 10)) {
+        party.hqAddress = req.body.hqAddress;
+        party.name = req.body.name;
+        party.logoUrl = req.body.logoUrl;
+        updatedparty = party;
       }
     });
-    if (!partyFound) {
-      return res.status(400).send({
-        status: 'updated',
-        success: 'false',
-        message: 'political party not found'
+    if (updatedparty) {
+      return res.status(200).json({
+        status: 200,
+        data: updatedparty
       });
     }
-    const updatedParty = {
-      id: partyFound.id,
-      partyname: req.body.partyname || partyFound.partyname,
-      address: req.body.address || partyFound.address,
-      phone: req.body.phone || partyFound.phone,
-      email: req.body.email || partyFound.email,
-      regnumber: req.body.regnumber || partyFound.regnumber,
-      imgurl: req.body.imgurl || partyFound.imgurl
-    };
-
-    politicalPartyDb.splice(partyIndex, 1, updatedParty);
-
-    return res.status(201).send({
-      success: 'true',
-      message: 'political party updated successfully',
-      updatedParty
+    return res.status(404).json({
+      status: 404,
+      message: 'party not found'
     });
   }
 
@@ -144,16 +109,17 @@ export default class politicalParty {
       }
     });
     if (!partyFound) {
-      return res.status(400).send({
-        status: 'not found',
-        success: 'false',
-        message: 'political party not found'
+      return res.status(404).send({
+        status: 404,
+        data: {
+          message: 'political party not found'
+        }
       });
     }
 
     politicalPartyDb.splice(partyIndex, 1);
     return res.status(200).send({
-      success: 'true',
+      status: 200,
       message: 'political party deleted successfuly'
     });
   }
