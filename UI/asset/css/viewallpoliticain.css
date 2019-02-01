@@ -1,0 +1,14 @@
+.viewpolitician{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    margin: 30px;
+}
+.politician{
+    
+    padding:15px;
+    text-transform: capitalize;
+    text-align: center;
+    font-size: 14px;
+    background: rgb(70, 67, 67);
+    color:#fff
+}
