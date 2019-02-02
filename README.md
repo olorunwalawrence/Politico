@@ -1,4 +1,7 @@
 # politico
+
+[![Build Status](https://travis-ci.org/olorunwalawrence/politico.svg?branch=develop)](https://travis-ci.org/olorunwalawrence/politico) [![Coverage Status](https://coveralls.io/repos/github/olorunwalawrence/politico/badge.svg?branch=develop)](https://coveralls.io/github/olorunwalawrence/politico?branch=develop)
+
 * Politico is a web application that allows users and politician registration and also allows users to vote for their choice electoral candidate
 
 * This project motivates me a lot because its a challenges me a lot and its been my goal to be a web application developer
