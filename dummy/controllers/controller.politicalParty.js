@@ -1,5 +1,4 @@
-/* eslint-disable valid-jsdoc */
-/* eslint-disable require-jsdoc */
+
 
 import politicalPartyDb from '../dummyDatabase/politicalPartyDb';
 import {
