@@ -1,18 +1,18 @@
 import express from 'express';
-import politicaloffice from '../controllers/politicaloffice';
-import politicalparty from '../controllers/politicalParty';
+import Politicaloffice from '../controllers/controller.politicaloffice';
+import Politicalparty from '../controllers/controller.politicalParty';
 import Validation from '../validation/formFileldValidation';
 
-const { PartyValidation , officeValidation } = Validation;
+const { PartyValidation } = Validation;
 
 const router = express.Router();
 
-const { createOffice, getAllOffice, getSingleOffice } = politicaloffice;
+const { createOffice, getAllOffice, getSingleOffice } = Politicaloffice;
 const {
   createParty, getAllParty, getSingleParty, updateparty, DeleteParty
-} = politicalparty;
+} = Politicalparty;
 
-router.post('/offices', officeValidation, createOffice);
+router.post('/offices', createOffice);
 router.post('/parties', PartyValidation, createParty);
 router.get('/offices', getAllOffice);
 router.get('/parties', getAllParty);

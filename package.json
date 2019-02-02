@@ -6,9 +6,7 @@
   "scripts": {
     "start:dev": "nodemon app.js --exec babel-node --",
     "start": "babel-node app.js",
-    "test:dev": "  nyc --reporter=html --reporter=text mocha test --compilers js:babel-core/register --timeout 50000ms --exit",
-    "migrate": "babel-node server/model/createTable/createtable.js",
-    "unmigrate": "babel-node server/model/undoTable/index.js",
+    "test:dev": "  nyc --reporter=html --reporter=text mocha dummy/test --compilers js:babel-core/register --timeout 50000ms --exit",
     "test": "npm run test:dev",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
@@ -21,7 +19,6 @@
   "license": "ISC",
   "bugs": {},
   "dependencies": {
-    "@sendgrid/mail": "^6.3.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.4",
@@ -30,16 +27,8 @@
     "body-parser": "^1.18.3",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
-    "cors": "^2.8.5",
-    "dotenv": "^6.1.0",
     "express": "^4.16.4",
-    "express-validator": "^5.3.0",
-    "jsonwebtoken": "^8.4.0",
-    "mocha": "^5.2.0",
-    "morgan": "^1.9.1",
-    "pg": "^7.6.1",
-    "pg-pool": "^2.0.4",
-    "validator": "^10.10.0"
+    "mocha": "^5.2.0"
   },
   "devDependencies": {
     "coveralls": "^3.0.2",
